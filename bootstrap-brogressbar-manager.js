@@ -3,9 +3,18 @@
  * @copyright Wakeel Ogunsanya
  * @author Wakeel Ogunsanya
  * @author_url wakeel.oguns@gmail.com
+ * 
+ * @version 1.0.1
  */
 
 (function ($) {  
+    /**
+     * 
+     * @param {object} opts
+     * @returns {Progress|bootstrap-brogressbar-manager_L10.$.fn.progressbarManager.Progress}
+     * 
+     * 
+     */
     $.fn.progressbarManager = function(opts) {    
         
         // auto generated id index
@@ -33,13 +42,17 @@
                 total : opts.totalValue ,
                 //Whether to create default bar
                 addDefaultBar : true ,
+                // this called when Prohgress.showValue() method is called
                 showValueHandler : function(bar){
                     var value = bar.elem.attr('aria-valuenow')+'%';
                     bar.elem.text( value );
                 },
+                // this called when Prohgress.hideValue() method is called
                 hideValueHandler : function(bar){
                     bar.elem.text( '' );
                 },
+                // callback that is fired when the value reaches total
+                // if using the stack progress bar features , this is fired when all the bars are completed
                 onComplete : function(){
                     
                 },
@@ -94,7 +107,8 @@
                 
                 /**
                  * Set the current bar value
-                 * @param {int} newValue
+                 * 
+                 * @param {int|string} newValue You can use something like 200kb
                  * @param {string} barId
                  * @returns {bootstrap-brogressbar-manager_L10.$.fn.progressbarManager.Progress}
                  */                               
@@ -120,10 +134,11 @@
                         bar.currentPercentRounded = newValuePercentRounded;
                         bar.currentValue = newValue;
                         
-                        if( bar.showText )
-                        {
-                            bar.elem.text(newValuePercentRounded+'%');
-                        }
+                        // handled by showValue()
+//                        if( bar.showText )
+//                        {
+//                            bar.elem.text(newValuePercentRounded+'%');
+//                        }
                         bar.elem.css('width' , newValuePercentRounded+'%');
                         // attempt to fire the show value callback
                         if(bar.showText){
@@ -184,8 +199,9 @@
                 };
                 
                 /**
+                 * Remove the stripe from progress bar
                  * 
-                 * @param {string} barId
+                 * @param {string} barId Optionally
                  * @returns {Progressbar}
                  */
                 this.removeStripe = function(barId){
@@ -198,7 +214,8 @@
                  
                 /**
                  * Change contectual stye for progress bar
-                 * @param {string} type
+                 * 
+                 * @param {string} type success|danger|info|warning|{your own}
                  * @param {string|null} barId
                  * @returns {void}
                  */
@@ -307,7 +324,12 @@
                 };
                 
                 /**
-                 * Add progress bar section to existing progess
+                 * Add progress bar section to existing progess 
+                 * 
+                 * This can be used to create stacked progres bar
+                 * 
+                 * This is called when the plugin is first initialized to generate the default 
+                 * bar unless the addDefaultBar option is set to false
                  * 
                  * @param {object} barOptions The bar option
                  * <table>
@@ -496,8 +518,8 @@
                 
                 
                 /**
-                 * Remove a bar element
-                 * @param {string} barId
+                 * Remove a bar element 
+                 * @param {string} barId Optional specify the id of bar to remove
                  * @returns {void}
                  */
                 this.removeBar = function(barId){
@@ -516,7 +538,7 @@
                 }
                 /**
                  * Get progress bar by id 
-                 * A progress cab have multiple bar 
+                 * A progress can have multiple bar (stacked)
                  * When you call addBar() the id or the progress bar is returned
                  * 
                  * @param {string} barId
@@ -550,11 +572,13 @@
             /**
              * Generate the progress bar htm 
              * 
-             * @param {int} id
-             * @param {type} initVal
-             * @param {type} style
-             * @param {type} min
-             * @param {type} max
+             * @param {string} id
+             * @param {int} initVal
+             * @param {string} style success|danger|info|warning
+             * @param {int} min
+             * @param {int} max
+             * @param {boolean} animate
+             * @param {boolean} stripe
              * @returns {jQuery|$|@exp;_$|Window.$}
              */
             var generateProgressBarHtml = function(id , initVal , style , min , max , animate , stripe ){
@@ -585,7 +609,7 @@
             };
             
             var debug = function( text ){
-                if(options.debug) debug('Progress Bar Manager Debug => ' + text);
+                if(options.debug) console.log('Progress Bar Manager Debug => ' + text);
             };
            
             // increase index for auto id

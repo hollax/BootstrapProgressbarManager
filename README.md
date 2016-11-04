@@ -1,40 +1,94 @@
+    
+     
 # BootstrapProgressbarManager
 
-Easily manipulate Bootstrap progress bar.
+Easily create and  manipulate Bootstrap progress bar.
 
-##Some Features
+##Features
 
 1. No need to write html for the progress bar
-2. Easilly style bootstrap progress bar 
-3. Easilly manage stacked progress bar
+2. Easily update progress value
+2. Easily style bootstrap progress bar 
+3. Easily create and manage stacked progress bar
 
-Progress bar can be used to display Upload progress to users
+##Usage 
+ 
+Call the plugin on the container element you want the progress html to be *appended* to. This will not override existing elements or content of the container element
 
-When you can the plugin, an object is returned which be used to manipulate the progress bar.
+    $(selector).progressbarManager( options );
 
-## Basic Usage 
+Where 
+* **Selector** : Jquery selector for the container to append the progress bar html to
+* **options** : Object literal to set the plugin options 
 
-    <div id="bar1">
+###HTML
+
+    <div id="progress">
        <strong>Simple Progress  Bar Example</strong>
     </div>
-    
-    myProgress = $('#bar1').progressbarManager({      
+
+####Javascript
+
+```javascript 
+ myProgress = $('#progress').progressbarManager({      
      totalValue : 50,
      initValue : 10 ,
      animate : true ,
      stripe : true
-    });
-    
-Then you can start updating the bar value 
+  });
+```
 
+The above generates:
+
+```html  
+<div id="pbm-bootsrap-progress-1" class="progress">
+    <div id="pbm-progress-bar-1" role="progress-bar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"     class="progress-bar progress-bar-primary active progress-bar-striped" style="width: 20%; min-width: 2em;">20%</div>
+</div>
+```
+
+and append it to the element with id _progress_. 
+
+The call to `progressbarManager` returns `progress` object which you can be used to modify the *progress* 
+element on the fly.
+  
+To update the value of the progress for instance : 
+
+```javascript 
     myProgress.setValue(30 );
-    
-You can also set the bar options on the fly 
+```
 
-    myProgress.style('danger').animate().stripe();
+*The plugin automatically converts values to percentage representation.*
 
-    myProgress.style('danger').animateRemove().removeStripe().setValue(40);
+Note: *If you attempt to set a value higher than the value of the `totalValue` option, 
+the progress bar percentage value will be set to 100% *.
     
+The `totalValue` option can be a string that can be converted to number representation for instance if 
+you are using it to monitor download or upload progress, you can use the bytes representation 
+
+```javascript 
+ myDownloadProgress = $('#progress').progressbarManager({      
+     totalValue : '40000kb',
+     animate : true ,
+     stripe : true
+  });
+  myDownloadProgress.setValue( '4000kb');
+```
+
+
+```javascript 
+ myDownloadProgress = $('#progress').progressbarManager({      
+     totalValue : '40000kb',
+  });
+```
+
+    myDownloadProgress.animate().stripe().setValue( '4000kb');
+
+
+or remove the stripe 
+
+    myDownloadProgress.removeStripe();
+    
+     
 You can add callback to be fired when the value reaches totalValue option
 
 
@@ -50,11 +104,9 @@ You can add callback to be fired when the value reaches totalValue option
      myprogress.complete();
      
      
-To check if the progress bar is complete
-    myProgress.isComplete()
-   
-To use the stacked progress bar option 
-  
+##Stacked Progress Bar
+
+    
     myProgressStacked = $('#bar1').progressbarManager({      
              totalValue : 50,
              initValue : 50 ,
@@ -88,11 +140,11 @@ To use the stacked progress bar option
              style: 'success'
           });
 The above will create a stacked progress bar
-You can change the style of any progress bar in the stack by specifing the id returned after calling addBar() method on the plugin object
+You can change the style of any progress bar within the stack by specifying the id returned after calling `addBar()` method on the plugin returned progress object
 
-    myProgressStacked.style('success' , StackedBar6 ); 
+     myProgressStacked.style('success' , StackedBar6 ); 
      myProgressStacked.animate('success' , StackedBar6 ).stripe( StackedBar6) ; 
      
 
-This is just a brief intro, link to the full documentation will be added soon.
+[Read Docs](https://hollax.github.io/BootstrapProgressbarManager)
 

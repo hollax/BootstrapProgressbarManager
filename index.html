@@ -106,8 +106,17 @@
     &lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>pbm-progress-bar-1<span class="pl-pds">"</span></span> <span class="pl-e">role</span>=<span class="pl-s"><span class="pl-pds">"</span>progress-bar<span class="pl-pds">"</span></span> <span class="pl-e">aria-valuenow</span>=<span class="pl-s"><span class="pl-pds">"</span>20<span class="pl-pds">"</span></span> <span class="pl-e">aria-valuemin</span>=<span class="pl-s"><span class="pl-pds">"</span>0<span class="pl-pds">"</span></span> <span class="pl-e">aria-valuemax</span>=<span class="pl-s"><span class="pl-pds">"</span>100<span class="pl-pds">"</span></span>     <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>progress-bar progress-bar-primary active progress-bar-striped<span class="pl-pds">"</span></span> <span class="pl-e">style</span>=<span class="pl-s"><span class="pl-pds">"</span>width: 20%; min-width: 2em;<span class="pl-pds">"</span></span>&gt;20%&lt;/<span class="pl-ent">div</span>&gt;
 &lt;/<span class="pl-ent">div</span>&gt;</pre></div>
 
-<p>and append it to the element with id <strong >progress</strong>. </p>
-
+	      <p>and append it to the element with id <strong >progress</strong>. </p>
+	      <div id="progress-example-1"></div>	      
+<script>
+      myProgress = $('#progress-example-1').progressbarManager({      
+                    totalValue : 50,
+                    initValue : 0 ,
+                    // this is important
+                    //total : 200
+                 });
+</script>
+	      
 <p>The call to <code>progressbarManager</code> returns <code>progress</code> object which you can use to modify the <em>progress</em> 
 element on the fly.</p>
 

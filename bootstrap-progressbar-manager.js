@@ -373,7 +373,7 @@
                     
                    
                     // check adding new bar based on its required space could prevent subsequent one
-                    if((totalValuePercentRounded + sum) >= 100 ){
+                    if((totalValuePercentRounded + sum) > 100 ){
                         debug('container can not contain the new bar element based on the percentage of its total: '+totalValuePercentRounded);
                         debug('Available space in percent is :'+ (100 - sum));
                         return true;

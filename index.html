@@ -165,14 +165,9 @@ you are using it to monitor download or upload progress, you can use the bytes r
      initValue <span class="pl-k">:</span> <span class="pl-c1">10</span> ,
      animate <span class="pl-k">:</span> <span class="pl-c1">true</span> ,
      stripe <span class="pl-k">:</span> <span class="pl-c1">true</span> ,
-     stytle <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>danger<span class="pl-pds">'</span></span>
+     style <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>danger<span class="pl-pds">'</span></span>
   });</pre></div>
 
-<div id="example-3">
-  <h3>
-<a id="-animated-progressbar-with-different-style-" class="anchor" href="#-animated-progressbar-with-different-style-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a> Animated Progressbar With Different style </h3>
-   <p> You can use bootsrap contectual style name: success , primary , danger , info and primary </p>
-</div>
 
 <div id="example-3">
   <h3> Animated Progressbar With Different style </h3>
@@ -184,7 +179,7 @@ you are using it to monitor download or upload progress, you can use the bytes r
      initValue : 10 ,
      animate : true ,
      stripe : true ,
-     stytle : 'danger'
+     style : 'danger'
   });
 </script>
 
@@ -196,7 +191,7 @@ you are using it to monitor download or upload progress, you can use the bytes r
      initValue <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>0kb<span class="pl-pds">'</span></span> ,
      animate <span class="pl-k">:</span> <span class="pl-c1">true</span> ,
      stripe <span class="pl-k">:</span> <span class="pl-c1">true</span> ,
-     stytle <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>primary<span class="pl-pds">'</span></span> ,
+     style <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>primary<span class="pl-pds">'</span></span> ,
   });
   <span class="pl-c">// lets simulate download</span>
   <span class="pl-k">var</span> chunk <span class="pl-k">=</span> <span class="pl-c1">0</span> ;
@@ -213,12 +208,6 @@ you are using it to monitor download or upload progress, you can use the bytes r
       chunk <span class="pl-k">+=</span> <span class="pl-c1">2000</span>;
   }, <span class="pl-c1">2000</span>);</pre></div>
 
-<div id="example-3">
-  <h3>
-<a id="-simulate-download-progress-" class="anchor" href="#-simulate-download-progress-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a> Simulate Download Progress </h3>
-   <p> Start Download </p>
-</div>
-
 
 <div id="example-4">
   <h3> Simulate Download Progress </h3>
@@ -231,7 +220,7 @@ you are using it to monitor download or upload progress, you can use the bytes r
             initValue : '0kb' ,
             animate : true ,
             stripe : true ,
-            stytle : 'primary' ,
+            style : 'primary' ,
     });
     // wait for user click
     $('#start-download').click(function(){
@@ -258,7 +247,7 @@ you are using it to monitor download or upload progress, you can use the bytes r
      initValue <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>0kb<span class="pl-pds">'</span></span> ,
      animate <span class="pl-k">:</span> <span class="pl-c1">true</span> ,
      stripe <span class="pl-k">:</span> <span class="pl-c1">true</span> ,
-     stytle <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>primary<span class="pl-pds">'</span></span> ,
+     style <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>primary<span class="pl-pds">'</span></span> ,
      <span class="pl-en">showValueHandler</span> <span class="pl-k">:</span> <span class="pl-k">function</span>(<span class="pl-smi">progressData</span>){
         <span class="pl-smi">progressData</span>.<span class="pl-smi">elem</span>.<span class="pl-c1">text</span>(<span class="pl-s"><span class="pl-pds">'</span>Downloaded <span class="pl-pds">'</span></span><span class="pl-k">+</span> <span class="pl-smi">progressData</span>.<span class="pl-smi">currentValue</span><span class="pl-k">+</span><span class="pl-s"><span class="pl-pds">'</span>%<span class="pl-pds">'</span></span>);
      }
@@ -266,7 +255,7 @@ you are using it to monitor download or upload progress, you can use the bytes r
 
 <div id="example-5">
   <h3> Custom Progressbar Text </h3>
-   <p> <button id="start-download-1"  class="btn btn-primary">Start Download </button></p>
+   <p> <button id="start-download-2"  class="btn btn-primary">Start Download </button></p>
 </div>
 
 <script>
@@ -275,7 +264,7 @@ you are using it to monitor download or upload progress, you can use the bytes r
             initValue : '0kb' ,
             animate : true ,
             stripe : true ,
-            stytle : 'primary' ,
+            style : 'primary' ,
             showValueHandler : function(progressData){
                 progressData.elem.text('Downloaded '+ progressData.currentPercent+'%');
              }

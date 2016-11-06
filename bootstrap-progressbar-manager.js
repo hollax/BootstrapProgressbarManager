@@ -4,7 +4,7 @@
  * @author Wakeel Ogunsanya
  * @author_url wakeel.oguns@gmail.com
  * 
- * @version 1.0.1
+ * @version 1.0.2
  */
 
 (function ($) {  
@@ -30,7 +30,7 @@
                 // whether to log to console
                 debug : false ,
                 // for the default bar 
-                currentValue : 0,
+                initValue : 0,
                 // for the default bar 
                 totalValue : 100 ,
                 // for the default bar 
@@ -47,6 +47,8 @@
                 total : opts.totalValue ,
                 //Whether to create default bar
                 addDefaultBar : true ,
+                //custom data 
+                data : { },
                 // this called when Prohgress.showValue() method is called
                 showValueHandler : function(bar){
                     var value = bar.elem.attr('aria-valuenow')+'%';
@@ -70,6 +72,7 @@
                     
                 }
             },opts);
+            options.total = parseInt(options.total);
             var $pbmContainer = $(this);
             function Progress( id  ){
                 var base = this;
@@ -107,7 +110,7 @@
                     // reset sum
                     sum = 0;
                     for(var i in bars){
-                        sum += bars[i].totalValuePercentRounded;
+                        sum += bars[i].totalValuePercent;
                     }
                     
                 };
@@ -127,18 +130,16 @@
                     newValue = parseInt(newValue);
                     
                     if(bar){
+                        // nomalize the value
+                        if(newValue > bar.totalValue){
+                            debug("New Bar value is greater that the totalValue. Setting the bar percentage to full");
+                            newValue = bar.totalValue;
+                        }
                         // convert new value to percent to percent
                         //var newValuePercent = 100 - (bar.total - newValue ) / bar.total  * 100 ;
                         var newValuePercent =  getValuePercentage( newValue , options.total ) ;
                         var newValuePercentRounded = Math.round(newValuePercent * 10 ) / 10;
-                        // nomalize the value
-                        if(newValue > bar.totalValue){
-                            debug("New Bar value is greater that the totalValue. Setting the bar percentage to full");
-                            newValuePercent = 100;
-                            newValuePercentRounded = 100;
-                            newValue = bar.totalValue;
-                            
-                        }
+                        
                         bar.elem.attr('aria-valuenow' , newValuePercentRounded);
                         bar.currentPercent = newValuePercent;
                         bar.currentPercentRounded = newValuePercentRounded;
@@ -149,7 +150,7 @@
 //                        {
 //                            bar.elem.text(newValuePercentRounded+'%');
 //                        }
-                        bar.elem.css('width' , newValuePercentRounded+'%');
+                        bar.elem.css('width' , Math.round(newValuePercent)+'%');
                         // attempt to fire the show value callback
                         if(bar.showText){
                             this.showValue(barId);
@@ -340,61 +341,6 @@
                  * This is called when the plugin is first initialized to generate the default 
                  * bar unless the addDefaultBar option is set to false
                  * 
-                 * @param {object} barOptns The bar option
-                 * <table>
-                 *      <thead>
-                 *          <td>Name </td>
-                 *          <td>type </td>
-                 *          <td>required </td>
-                 *          <td>description</td>
-                 *      </thead>
-                 *      <tbody>
-                 *          <tr>
-                 *              <td> initValue </td>
-                 *              <td> int </td>
-                 *              <td> yes </td>
-                 *              <td> The initial value of the prgress bar</td>
-                 *          </tr>
-                 *          <tr>
-                 *              <td> totalValue </td>
-                 *              <td>  int </td>
-                 *              <td> yes </td>
-                 *              <td> The total value of the progress bar</td>
-                 *          </tr>
-                 *          <tr>
-                 *              <td> style </td>
-                 *              <td> string </td>
-                 *              <td> no default: primary </td>
-                 *              <td> Bootsrap contextual styling. . primary|success|danger|warning</td>
-                 *          </tr>
-                 *          <tr>
-                 *              <td> animate </td>
-                 *              <td> boolean </td>
-                 *              <td> no default: false </td>
-                 *              <td> Whether to animate the progress</td>
-                 *          </tr>
-                 *          <tr>
-                 *              <td> stripe </td>
-                 *              <td> boolean </td>
-                 *              <td> no default: false </td>
-                 *              <td> Whether to add stripe to the progress bar</td>
-                 *          </tr>
-                 *          <tr>
-                 *              <td> showValueHandler </td>
-                 *              <td> callable </td>
-                 *              <td> no default: The inbuilt function which displays the current percentge</td>
-                 *              <td> Function that will be called to to show the value of the progress. The function is 
-                 *              passed an object with bar data</td>
-                 *          </tr>
-                 *          <tr>
-                 *              <td> hideValueHandler </td>
-                 *              <td> callable </td>
-                 *              <td> no default: The inbuilt function which hides the current percentge</td>
-                 *              <td> Function that will be called to to hide the value of the progress</td>
-                 *          </tr>
-                 *      </tbody>
-                 *  </table>
-             
                  * @returns {String} Progress Bar element id
                  * 
                  * @note The retured id can supplied to methods which accepts progress bar id
@@ -402,16 +348,14 @@
                  */
                 this.addBar = function( barOptns ){
                     
-                    if(noMoreSpace){
-                        debug('container can not take new bar element, space full!');
-                        return false;
-                    }
+                    
                     var barOptions = $.extend({
                                                 initValue : 0 ,
                                                 totalValue : 100 ,
                                                 style : 'primary',
                                                 animate : false,
                                                 stripe : false,
+                                                data : { } ,
                                                 showValueHandler : options.showValueHandler,
                                                 hideValueHandler : options.hideValueHandler
                                             },barOptns);
@@ -419,28 +363,33 @@
                     var id = options.barIdPrefix + count ;
                     var initVal = parseInt(barOptions.initValue) || 0  ;
                     var totalVal = parseInt(barOptions.totalValue) || (100 - sum)  ;
+                   
                     // convert the init value to percent
                     var initValuePercent =  getValuePercentage( initVal , options.total );
                     var initValuePercentRounded = Math.round(initValuePercent * 10 ) / 10;
-                    // convert the total value to percent
+                    // convert the total value to percent , we use the grand total
                     var totalValuePercent =  getValuePercentage( totalVal , options.total );
                     var totalValuePercentRounded = Math.round(totalValuePercent * 10 ) / 10;
-                    // we
-                    var availableSpace = 100 - sum  ;
                     
-                    if(initValuePercent >= availableSpace ){
-                        // normalize value
-                        initValuePercent  = availableSpace ;
-                        noMoreSpace = true;
+                   
+                    // check adding new bar based on its required space could prevent subsequent one
+                    if((totalValuePercentRounded + sum) >= 100 ){
+                        debug('container can not contain the new bar element based on the percentage of its total: '+totalValuePercentRounded);
+                        debug('Available space in percent is :'+ (100 - sum));
+                        return true;
+                    }
+                    if(initVal > totalVal){
+                        initValuePercentRounded = totalValuePercentRounded;
                     }
                     // gemerate the progress bar html
-                    var elem = generateProgressBarHtml( id , initValuePercentRounded , barOptions.style , initVal , totalVal , barOptions.animate , barOptions.stripe );
+                    var elem = generateProgressBarHtml( id , Math.round(initValuePercent) , barOptions.style , initVal , totalVal , barOptions.animate , barOptions.stripe );
                     // add new bar to the progress
                     progressElement.append(elem);
                     
                     //save the bar data
                     // The object is passed to callbacks 
                     bars[id] = { 
+                        
                         /**
                          * int Total value for the bar
                          */
@@ -464,7 +413,7 @@
                         'initPercent' : initValuePercent ,
                         /**
                          * 
-                         * Initial percentage
+                         * Total percentage
                          * 
                          * Dont change in callbacks 
                          */
@@ -485,7 +434,7 @@
                          */
                         'currentPercentRounded' : initValuePercentRounded ,
                         /**
-                         * Contectuak bootsrap style using bootsrap
+                         * Contextual bootstrap style prefix
                          * 
                          * success|danger|info|primary
                          */
@@ -509,6 +458,8 @@
                          * stacked progress bar 
                          */
                         'id' : id ,
+                        
+                        data : barOptions.data ,
                         /**
                          * Function that shows the current value/state of the progress bar
                          */

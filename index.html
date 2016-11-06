@@ -100,6 +100,18 @@
 
 <p>and append it to the element with id <em>progress</em>. </p>
 
+	    
+<div id="example-1">
+  <h3> Example Progressbar </h3>
+
+</div>
+<script>
+    $('#example-1').progressbarManager({      
+     totalValue : 50,
+     initValue : 10 ,
+  });
+</script>
+	    
 <p>The call to <code>progressbarManager</code> returns <code>progress</code> object which you can be used to modify the <em>progress</em> 
 element on the fly.</p>
 
@@ -162,7 +174,19 @@ you are using it to monitor download or upload progress, you can use the bytes r
    <p> You can use bootsrap contectual style name: success , primary , danger , info and primary </p>
 </div>
 
-
+<div id="example-3">
+  <h3> Animated Progressbar With Different style </h3>
+   <p> You can use bootsrap contectual style name: success , primary , danger , info and primary </p>
+</div>
+<script>
+    $('#example-3').progressbarManager({      
+     totalValue : 50,
+     initValue : 10 ,
+     animate : true ,
+     stripe : true ,
+     stytle : 'danger'
+  });
+</script>
 
 <h3>
 <a id="simulate-download-with-setinterval" class="anchor" href="#simulate-download-with-setinterval" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Simulate download with setInterval()</h3>
@@ -196,6 +220,35 @@ you are using it to monitor download or upload progress, you can use the bytes r
 </div>
 
 
+<div id="example-4">
+  <h3> Simulate Download Progress </h3>
+   <p> <button id="start-download"  class="btn btn-primary">Start Download </button></p>
+</div>
+
+<script>
+    myDownloadProgress = $('#example-4').progressbarManager({      
+            totalValue : '20000kb',
+            initValue : '0kb' ,
+            animate : true ,
+            stripe : true ,
+            stytle : 'primary' ,
+    });
+    // wait for user click
+    $('#start-download').click(function(){
+         // lets simulate download
+         var chunk = 0 ;
+         var downloading = setInterval(function(){
+
+             myDownloadProgress.setValue(chunk);
+
+             if(myDownloadProgress.isComplete()){
+                 myDownloadProgress.style('success');
+                 clearInterval(downloading);
+             }
+             chunk += 2000;
+         }, 2000);
+    });
+</script>
 
 <h3>
 <a id="custom-progressbar-text" class="anchor" href="#custom-progressbar-text" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Custom Progressbar Text</h3>
@@ -211,13 +264,40 @@ you are using it to monitor download or upload progress, you can use the bytes r
      }
   });</pre></div>
 
-<div id="example-4">
-  <h3>
-<a id="-custom-progressbar-text-" class="anchor" href="#-custom-progressbar-text-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a> Custom Progressbar Text </h3>
-   <p> Start Download </p>
+<div id="example-5">
+  <h3> Custom Progressbar Text </h3>
+   <p> <button id="start-download-1"  class="btn btn-primary">Start Download </button></p>
 </div>
 
+<script>
+      myDownloadProgress2 = $('#example-5').progressbarManager({      
+            totalValue : '20000kb',
+            initValue : '0kb' ,
+            animate : true ,
+            stripe : true ,
+            stytle : 'primary' ,
+            showValueHandler : function(progressData){
+                progressData.elem.text('Downloaded '+ progressData.currentPercent+'%');
+             }
+           
+    });
+    // wait for user click
+    $('#start-download-2').click(function(){
+         // lets simulate download
+         var chunk = 2000 ;
+         var downloading = setInterval(function(){
 
+             myDownloadProgress2.setValue(chunk);
+
+             if(myDownloadProgress2.isComplete()){
+                 myDownloadProgress2.style('success');
+                 clearInterval(downloading);
+             }
+             chunk += 2000;
+         }, 2000);
+    });
+</script>
+	    
 
 <p>Some Options can be set after the plugin is initialized. <a href="#plugin-options">See available option</a></p>
 
@@ -259,11 +339,30 @@ This can be archived by calling <code>addBar()</code> of the progress object.</p
      style <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>info<span class="pl-pds">'</span></span>
   });</pre></div>
 
-<div id="example-5">
-  <h3>
-<a id="-stacked-progress-bar-" class="anchor" href="#-stacked-progress-bar-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a> Stacked Progress Bar </h3>
+
+<div id="example-6">
+  <h3> Stacked Progress Bar </h3>
 </div>
 
+<script>
+     myProgress = $('#example-6').progressbarManager({      
+     totalValue : 50,
+     initValue : 50 ,
+     // this is important
+     total : 200
+  });
+  
+  newProgressBarId = myProgress.addBar({      
+     totalValue : 50,
+     initValue : 40 ,
+     style : 'danger'
+  });
+  newProgressBarId2 = myProgress.addBar({      
+     totalValue : 50,
+     initValue : 40 ,
+     style : 'info'
+  });
+</script>
 
 
 <h3>
@@ -309,18 +408,70 @@ myStackedProgress <span class="pl-k">=</span> <span class="pl-en">$</span>(<span
 
 <div class="highlight highlight-source-js"><pre>    <span class="pl-smi">myStackedProgress</span>.<span class="pl-c1">style</span>(<span class="pl-s"><span class="pl-pds">'</span>success<span class="pl-pds">'</span></span> , newProgressBarId2).<span class="pl-c1">animate</span>(newProgressBarId2).<span class="pl-en">setValue</span>( <span class="pl-c1">50</span> ,newProgressBarId2)</pre></div>
 
-<div id="example-6">
-  <h3>
-<a id="-updating-stacked-progress-bar-" class="anchor" href="#-updating-stacked-progress-bar-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a> Updating Stacked Progress Bar </h3>
+
+<div id="example-7">
+  <h3> Updating Stacked Progress Bar </h3>
   <p> Note the custom data </p>
   <p>
-      Update Second Item 
-      Update Third Item 
-      Add new Item 
+      <button id="update-stack-2"  class="btn btn-primary">Update Second Item </button>
+      <button id="update-stack-3"  class="btn btn-primary">Update Third Item </button>
+      <button id="add-stack"  class="btn btn-primary">Add new Item </button>
   </p>
 </div>
 
-
+<script>
+    myStackedProgress = $('#example-7').progressbarManager({      
+     totalValue : 50,
+     initValue : 50 ,
+     // this is important
+     total : 200,
+     debug : true ,
+     data : {
+         name : 'Stack One'
+     },
+     showValueHandler : function (progressbarData){
+         progressbarData.elem.text(progressbarData.data.name)
+     }
+  });
+  
+  newProgressBarId2 = myStackedProgress.addBar({      
+     totalValue : 30,
+     initValue : 20 ,
+     style : 'danger',
+     data : {
+         name : 'Stack Two'
+     }
+  });
+  newProgressBarId3 = myStackedProgress.addBar({      
+     totalValue : 30,
+     initValue : 20 ,
+     style : 'info' ,
+     data : {
+         name : 'Stack Three'
+     }
+  });
+  
+  $("#update-stack-2").click(function(){
+        myStackedProgress.style('success' , newProgressBarId2).animate(newProgressBarId2).setValue( 30 ,newProgressBarId2)
+    });
+    
+  $("#update-stack-3").click(function(){
+        myStackedProgress.style('primary' , newProgressBarId3).animate(newProgressBarId3).setValue( 30 ,newProgressBarId3)
+    });
+    
+    var clickStackAdded = 1;
+  $("#add-stack").click(function(){
+        newProgressBarId4 = myStackedProgress.addBar({      
+            totalValue : 30,
+            initValue : 30 ,
+            data : {
+                name : 'Added Stack '+clickStackAdded
+            }
+         });
+         clickStackAdded ++;
+    });
+    
+</script>
 
 <p>Note: </p>
 

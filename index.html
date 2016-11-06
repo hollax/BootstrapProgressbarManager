@@ -5,9 +5,17 @@
     <title>Bootstrap Progressbar Manager by hollax</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	  <script src="bootstrap-progressbar-manager.min.js"></script>
+          
   </head>
   <body>
     <section class="page-header">
@@ -125,20 +133,17 @@ you are using it to monitor download or upload progress, you can use the bytes r
   });</pre></div>
 
 <div id="example-2">
-  <h3>
-<a id="-animated-progressbar-" class="anchor" href="#-animated-progressbar-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a> Animated Progressbar </h3>
+  <h3> Animated Progressbar </div>
+
 </div>
-
-
-
-
-
-<div class="highlight highlight-source-js"><pre> myProgress <span class="pl-k">=</span> <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#progress<span class="pl-pds">'</span></span>).<span class="pl-en">progressbarManager</span>({      
-     totalValue <span class="pl-k">:</span> <span class="pl-c1">50</span>,
-     initValue <span class="pl-k">:</span> <span class="pl-c1">10</span> ,
-     animate <span class="pl-k">:</span> <span class="pl-c1">true</span> ,
-     stripe <span class="pl-k">:</span> <span class="pl-c1">true</span>
-  });</pre></div>
+<script>
+    $('#example-2').progressbarManager({      
+     totalValue : 50,
+     initValue : 10 ,
+     animate : true ,
+     stripe : true
+  });
+</script>
 
 <h3>
 <a id="animated-progress-bar-with-different-color" class="anchor" href="#animated-progress-bar-with-different-color" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Animated Progress Bar With Different Color</h3>
